@@ -1,0 +1,2 @@
+Authentication:Google:ClientSecret = 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
+Authentication:Google:ClientId = 65099909019-e6fq1gck2j2motqfuno1jj38lajqhhin.apps.googleusercontent.com
