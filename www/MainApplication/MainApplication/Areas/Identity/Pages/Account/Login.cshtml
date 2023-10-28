@@ -3,24 +3,25 @@
 
 @{
     ViewData["Title"] = "Log in";
+    Layout = "_LayoutAccount.cshtml";
 }
-<section class="position-relative h-100 pt-5 pb-4">
+<section class="position-relative h-100 pb-4">
 
     <!-- Sign in form -->
-    <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 pt-5">
-        <div class="w-100 align-self-end pt-1 pt-md-4 pb-4" style="max-width: 526px;">
+    <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100">
+        <div class="w-100 align-self-end pb-4" style="max-width: 526px;">
             <h1 class="text-center text-xl-start">Welcome Back</h1>
             <p class="text-center text-xl-start pb-3 mb-3">Don’t have an account yet? <a href="account-signup.html">Register here.</a></p>
-            <form class="needs-validation mb-2" novalidate>
+            <form class="needs-validation mb-2" id="account" method="post" novalidate>
                 <div class="position-relative mb-4">
-                    <label for="email" class="form-label fs-base">Email</label>
-                    <input type="email" id="email" class="form-control form-control-lg" required>
-                    <div class="invalid-feedback position-absolute start-0 top-100">Please enter a valid email address!</div>
+                    <label asp-for="Input.Email" class="form-label fs-base">Email</label>
+                    <input asp-for="Input.Email" type="email" id="email" class="form-control form-control-lg" required>
+                    <div asp-validation-formaction="Input.Email" class="invalid-feedback position-absolute start-0 top-100">Please enter a valid email address!</div>
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="form-label fs-base">Password</label>
+                    <label asp-for="Input.Password" class="form-label fs-base">Password</label>
                     <div class="password-toggle">
-                        <input type="password" id="password" class="form-control form-control-lg" required>
+                        <input type="Input.Password" id="password" class="form-control form-control-lg" required>
                         <label class="password-toggle-btn" aria-label="Show/hide password">
                             <input class="password-toggle-check" type="checkbox">
                             <span class="password-toggle-indicator"></span>
@@ -34,17 +35,19 @@
                         <label for="remember" class="form-check-label fs-base">Remember me</label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary shadow-primary btn-lg w-100">Sign in</button>
+                <button id="login-submit" type="submit" class="btn btn-primary shadow-primary btn-lg w-100">Sign in</button>
             </form>
             <a href="#" class="btn btn-link btn-lg w-100">Forgot your password?</a>
             <hr class="my-4">
             <h6 class="text-center mb-4">Or sign in with your social network</h6>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
             <div class="row row-cols-1 row-cols-sm-2">
                 <div class="col mb-3">
-                    <a href="#" class="btn btn-icon btn-secondary btn-google btn-lg w-100">
+
+                    <button class="btn btn-icon btn-secondary btn-google btn-lg w-100" value="Google" title="Log in using your Google Account" name="provider" type="submit">
                         <i class="bx bxl-google fs-xl me-2"></i>
                         Google
-                    </a>
+                    </button>
                 </div>
                 <div class="col mb-3">
                     <a href="#" class="btn btn-icon btn-secondary btn-facebook btn-lg w-100">
@@ -53,101 +56,20 @@
                     </a>
                 </div>
             </div>
+            </form>
         </div>
         <div class="w-100 align-self-end">
             <p class="nav d-block fs-xs text-center text-xl-start pb-2 mb-0">
                 &copy; All rights reserved. Made by
-                <a class="nav-link d-inline-block p-0" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a>
+                Old Barom
             </p>
         </div>
     </div>
 
     <!-- Background -->
-    <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(assets/img/account/signin-bg.jpg);"></div>
-</section>
-<section class="position-relative h-100  pb-4">
-    <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 ">
-        <div class="w-100 align-self-end pt-1 pt-md-4 pb-4" style="max-width: 526px;">
-            <h1 class="text-center text-xl-start  mb-3">Log in</h1>
-            <p class="text-center text-xl-start pb-3 mb-3">Don't have an account yet? <a asp-area="identity" asp-page="Account/Login"> Register Here.</a></p>
-            <form id="account" method="post" class="needs-validation mb-2">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="position-relative mb-4">
-                    <label asp-for="Input.Email" class="form-label fs-base"></label>
-                    <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" />
-                    <span asp-validation-for="Input.Email" class="invalid-feedback position-absolute start-0 top-100"></span>
-                </div>
-                <div class="mb-4">
-                    <label asp-for="Input.Password" class="form-label fs-base">Password</label>
-                    <div class="password-toggle">
-                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" aria-required="true" />
-                        <label class="password-toggle-btn" aria-label="Show/hide password">
-                            <input class="password-toggle-check" type="checkbox" />
-                            <span class="password-toggle-indicator"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </div>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url(../../img/account/signin-bg.jpg);"></div>
 </section>
 
-<div class="row">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                article
-                                about setting up this ASP.NET application to support logging in via external services
-                            </a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
