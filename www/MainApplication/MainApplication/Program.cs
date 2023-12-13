@@ -60,7 +60,7 @@ builder.Services.AddAuthentication()
        options.ClientId = googleAuthNSection["ClientId"];
        options.ClientSecret = googleAuthNSection["ClientSecret"];
    });
-   
+//Adicionar o discord dps
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
